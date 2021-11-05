@@ -220,7 +220,7 @@ class CartesianPainter(private val plane : Plane ) : Painter {
     private fun drawXLabels(g : Graphics, yZeroPoint : Int) {
         with (g as Graphics2D) {
             stroke = BasicStroke(1F)
-            color = Color.BLACK
+            color = LargeTickClr
             font = mainFont
             with(plane) {
                 for (i in 0 until wholePointsX.size) {
@@ -242,7 +242,7 @@ class CartesianPainter(private val plane : Plane ) : Painter {
     private fun drawYLabels(g : Graphics, xZeroPoint: Int) {
         with (g as Graphics2D) {
             stroke = BasicStroke(1F)
-            color = Color.BLACK
+            color = LargeTickClr
             font = mainFont
             with(plane) {
                 for (i in 0 until wholePointsY.size) {
