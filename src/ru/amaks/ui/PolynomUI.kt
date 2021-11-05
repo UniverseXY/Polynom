@@ -64,9 +64,7 @@ class PolynomUI: JFrame() {
         val cartesianPainter = CartesianPainter(mainPlane)
         val pointsPainter = PointsPainter(mainPlane)
         var polynom = Newton_2(mutableMapOf())
-        val polPainter = FunctionPainter(mainPlane){
-            polynom.invoke(it)
-        }
+        val polPainter = FunctionPainter(mainPlane, polynom::invoke)
         val derivPainter = FunctionPainter(mainPlane){
             polynom.find_Derivative().invoke(it)
         }
@@ -93,7 +91,6 @@ class PolynomUI: JFrame() {
                         // Если точка удалена с экрана, то удаляем ее из узлов в полиноме
                         if (isDeleted) {
                             polynom.deletePointX(pointsPainter.deletedPointX)
-                            polynom = Newton_2(polynom._points)
                         }
                     }
                     panel.repaint()

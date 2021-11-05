@@ -6,7 +6,7 @@ import kotlin.math.abs
 
 class Newton_2(private val points: MutableMap<Double, Double>): Polynom() {
 
-    private val pr:Polynom = Polynom(1.0)
+    private var pr:Polynom = Polynom(1.0)
     val _points : MutableMap<Double, Double>
         get () = points
     init {
@@ -16,11 +16,11 @@ class Newton_2(private val points: MutableMap<Double, Double>): Polynom() {
         if (k.isNotEmpty()) {
             newt += v[0]
             for (i in 0..(k.size - 2)) {
-                pr *= Polynom(mutableListOf(-k[i], 1.0))
+                pr = pr * Polynom(mutableListOf(-k[i], 1.0))
                 newt += pr * f(i + 1)
             }
             coeff = newt.coeff
-            pr *= Polynom(mutableListOf(-k[k.size - 1], 1.0))
+            pr =pr *  Polynom(mutableListOf(-k[k.size - 1], 1.0))
         }
     }
 
@@ -41,15 +41,19 @@ class Newton_2(private val points: MutableMap<Double, Double>): Polynom() {
     fun addPoint(x: Double, y: Double){
         points[x] = y
         this += pr * f(points.size - 1)
-        pr *= Polynom(mutableListOf(-x, 1.0))
+        pr =pr * Polynom(mutableListOf(-x, 1.0))
     }
     fun deletePointX (pointX : Double) {
-        points.keys.forEach{
+        val keys = _points.keys
+       /* keys.forEach{
             if (abs(pointX - it) eq 0.0 ) {
                 points.remove(pointX)
-                return
             }
-        }
+        }*/
+        keys.removeIf{abs(pointX - it) eq 0.0}
+        val changedPolynom = Newton_2(points)
+        this.pr = changedPolynom.pr
+        this.coeff = changedPolynom.coeff
 
     }
 }
